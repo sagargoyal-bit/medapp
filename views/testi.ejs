@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('header.ejs') -%>
+  </head>
+  <body>
+    
+    
+      <section class="body">
+
+        <!-- start: header -->
+        
+        <!-- end: header -->
+  
+        <div class="inner-wrapper
+          <!-- start: sidebar -->
+          <aside id="sidebar-left" class="sidebar-left">
+          
+            <div class="sidebar-header">
+             
+              <div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
+                <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+              </div>
+            </div>
+          
+            <div class="nano">
+              <div class="nano-content">
+              <!--  navbar-->
+               <%- include('navbar.ejs')-%>
+               
+                <hr class="separator" />
+          
+               
+          
+                <hr class="separator" />
+          
+              </div>
+          
+            </div>
+          
+          </aside>
+          
+          <!-- table -->
+  
+          <section role="main" class="content-body">
+            <header class="page-header">
+              <h2>Dashboard</h2>
+            </header>
+            
+  
+              <div class="container">
+               
+                <form action="/search-medicine" method="POST">
+                <div class="form-group">
+                 
+                    <h4 class="col-md-2 control-label">Search Medicine</h4>
+                    <div class="col-md-2">
+                        <div class="input-group input-search">
+                            <input type="text" class="form-control" name="medicine" id="q1" placeholder="Enter Medicine">
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="input-group input-search">
+                          <input type="text" class="form-control" name="bnumber" id="q1" placeholder="Enter Batchnumber">
+                          
+                      </div>
+                  </div>
+                  
+                    
+                   
+                  
+                  <div class="col-md-2">
+                   
+                      <input type="submit" class="btn btn-primary" type="submit" value="Search">
+                 </div>
+                </div>
+                </form>
+              
+               
+                <hr>
+                
+              </div>
+                <hr>
+              
+            
+               
+                  
+             <div class="row">
+                <div class="col-md-8">
+                    <section class="panel">
+                      <header class="panel-heading">
+                        <div class="panel-actions">
+                          <a href="#" class="fa fa-caret-down"></a>
+                          
+                        </div>
+                
+                        <h1 class="panel-title">Medicines</h1>
+                      </header>
+                      <div class="panel-body">
+                        <div class="table-responsive">
+                          <table class="table table-hover mb-none"  id="tid">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>Medicine</th>
+                                <th>Seller name</th>
+                                <th>Batch number</th>
+                                <th>Expiry month</th>
+                                <th>Expiry year</th>
+                                <th>Action</th>
+                                
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <% if (records.length >0 ){ %>
+                                <% records.forEach(function(row) { %>
+                              
+                                <tr>
+                                  <th>#</th>
+                                  <td><%= row.medicine %></td>
+                                  <td><%= row.sellername %></td>
+                                  <td><%= row.batchnumber %></td>
+                                  <td><%= row.expirymonth %></td> 
+                                  <td><%= row.expiryyear %></td>
+                            
+                                <td >
+                                  
+                                  <a href="/edit/<%= row._id%>"> <button  class="btn btn-info">Edit</button></a>
+                                  
+                               
+                                  <a href="/search-delete/<%= row._id%>" ><button class="btn btn-danger">Delete</button></a>
+                                  </td>
+
+                              </tr>
+                              <%})}else { %>
+                                <th scope="colspan=5">NO data found</th>
+                              <%}%> 
+                              
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+            </div>
+            
+            <!-- start: page -->
+  
+  
+            
+  
+            <!-- end: page -->
+             </section>
+    </div>
+  
+      </section>
+  <!--  footer -->
+  <%- include('footer.ejs') -%>
+  <script>
+   $(document).ready(function() {
+     $('#tid').DataTable();
+   } );
+   </script>
+    </body>
+  </html>
+
+
+  

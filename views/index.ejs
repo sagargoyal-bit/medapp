@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('header.ejs') -%>
+    <script>
+		function tableToJson(table) {
+    var data = [];
+
+    // first row needs to be headers
+    var headers = [];
+    for (var i=0; i<table.rows[0].cells.length; i++) {
+        headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/ /gi,'');
+    }
+    data.push(headers);
+    // go through cells
+    for (var i=1; i<table.rows.length; i++) {
+
+        var tableRow = table.rows[i];
+        var rowData = {};
+
+        for (var j=0; j<tableRow.cells.length; j++) {
+
+          rowData[ headers[j] ] = tableRow.cells[j].innerHTML;
+
+        }
+
+        data.push(rowData);
+    }       
+
+    return data;
+}
+function callme(){
+var table = tableToJson($('#tid').get(0));
+var doc = new jsPDF('l','pt','letter',true);
+
+doc.cellInitialize();
+$.each(table, function(i, row){
+	$.each(row, function(j,cell){
+    if(j=="#" | j==0)
+    {
+      doc.cell(1,10,20,20,cell,i);
+    }
+    if(j=="medicine" | j==1)
+    {
+      doc.cell(1,10,190,20,cell,i);
+    }
+    if(j=="sellername" | j==2)
+    {
+      doc.cell(1,10,190,20,cell,i);
+    }
+    if(j=="batchnumber" | j==3)
+    {
+      doc.cell(1,10,130,20,cell,i);
+    }
+    if(j=="expirymonth" | j==4)
+    {
+      doc.cell(1,10,100,20,cell,i);
+    }
+    if(j=="expiryyear" | j==5)
+    {
+      doc.cell(1,10,100,20,cell,i);
+    }
+   
+
+    
+	
+	});
+});
+
+doc.save('expiry.pdf');
+}
+		</script>
+  </head>
+  <body>
+    
+    
+      <section class="body">
+
+        <!-- start: header -->
+        
+        <!-- end: header -->
+  
+        <div class="inner-wrapper">
+          <!-- start: sidebar -->
+          <aside id="sidebar-left" class="sidebar-left">
+          
+            <div class="sidebar-header">
+             
+              <div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
+                <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+              </div>
+            </div>
+          
+            <div class="nano">
+              <div class="nano-content">
+              <!--  navbar-->
+               <%- include('navbar.ejs')-%>
+               
+                <hr class="separator" />
+          
+               
+          
+                <hr class="separator" />
+          
+              </div>
+          
+            </div>
+          
+          </aside>
+          
+          <!-- table -->
+  
+          <section role="main" class="content-body">
+            <header class="page-header">
+              <h2>Dashboard</h2>
+              <h2 >Welcome :<% if(admin){%><%= admin%><%}%><h2>
+            
+            </header>
+            
+  
+              <div class="container">
+                <div class="form-group">
+                  <form action="/Home" method="post">
+                    <h4 class="col-md-2 control-label">Enter Month and year both</h4>
+                    <div class="col-md-3">
+                        
+                          <select class="form-control" id="inputFocus" name="expirymonth">
+                            <option>--Select Month--</option>
+                            <option>Jan</option>
+                            <option>Feb</option>
+                            <option>Mar</option>
+                            <option>Apr</option>
+                            <option>May</option>
+                            <option>Jun</option>
+                            <option>July</option>
+                            <option>Aug</option>
+                            <option>Sep</option>
+                            <option>Oct</option>
+                            <option>Nov</option>
+                            <option>Dec</option>
+                          </select>
+                                      
+                    </div>
+                    <div class="col-md-3">
+                   
+                      <input type="text"  class="form-control" id="inputFocus" placeholder="Enter year"  name="expiryyear">
+                    </div>
+                    <input type="submit" class="btn btn-info" value="Search">
+                  </form>
+                </div>
+               
+                <hr>
+                <hr>
+            
+               
+                  
+             <div class="row">
+                <div class="col-md-8">
+                    <section class="panel">
+                      <header class="panel-heading">
+                        <div class="panel-actions">
+                           <button onclick="callme()" class="btn btn-danger">Download pdf</button>
+                          <a href="#" class="fa fa-caret-down"></a>
+                          
+                        </div>
+                
+                        <h1 class="panel-title">Expired medicine</h1>
+                      </header>
+                      
+                      <div class="panel-body">
+                        <div class="table-responsive">
+                          <table class="table table-hover mb-none"  id="tid">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>Medicine</th>
+                                <th>Seller name</th>
+                                <th>Batch number</th>
+                                <th>Expiry month</th>
+                                <th>Expiry year</th>
+                                <th>Date</th>
+                                
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <% if (records.length >0 ){ %>
+                                <% records.forEach(function(row) { %>
+                              
+                                <tr>
+                                  <th>#</th>
+                                  <td style="width: 20%;"><%= row.medicine %></td>
+                                  <td style="width: 20%;"><%= row.sellername %></td>
+                                  <td><%= row.batchnumber %></td>
+                                  <td><%= row.expirymonth %></td> 
+                                  <td><%= row.expiryyear %></td>
+                                  <td style="width: 70%;"><%= row.date %></td>
+                              
+
+                              </tr>
+                              <%})}else { %>
+                                <th scope="colspan=5">NO data found</th>
+                              <%}%> 
+                              
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+            </div>
+            
+            <!-- start: page -->
+  
+  
+            
+  
+            <!-- end: page -->
+             </section>
+    </div>
+  
+      </section>
+  <!--  footer -->
+
+
+ 
+   
+  <%- include('footer.ejs') -%>
+  <script>
+   $(document).ready(function() {
+     $('#tid').DataTable();
+   } );
+      </script>
+    </body>
+  </html>
+
+
+  

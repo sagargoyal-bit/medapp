@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('header.ejs') -%>
+  </head>
+  <body>
+    
+    
+      <section class="body">
+
+        <!-- start: header -->
+        
+        <!-- end: header -->
+  
+        <div class="inner-wrapper">
+          <!-- start: sidebar -->
+          <aside id="sidebar-left" class="sidebar-left">
+          
+            <div class="sidebar-header">
+             
+              <div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
+                <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+              </div>
+            </div>
+          
+            <div class="nano">
+              <div class="nano-content">
+                <!-- navbar-->
+               <%- include('navbar.ejs') -%>
+          
+                <hr class="separator" />
+          
+               
+          
+                <hr class="separator" />
+          
+              </div>
+          
+            </div>
+          
+          </aside>
+          <!-- end: sidebar -->
+     <section role="main" class="content-body">
+            <header class="page-header">
+              <h2>Dashboard</h2>
+            
+             
+            </header>
+            
+    <div class="container">
+      <% if(success!=''){%>
+        <div class="alert alert-info">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+          <strong ><%= success %></strong>
+        </div>
+        <%}%>
+      <section class="panel">
+        <div class="col-md-1 " ></div>
+        <div class="col-md-6">
+        <header class="panel-heading">
+          <div class="panel-actions">
+            <a href="#" class="fa fa-caret-down"></a>
+            
+          </div>
+
+          <h1 class="panel-title" style="text-align:center;">change medicine data</h1>
+        </header>
+        <div class="panel-body">
+          <form class="form-horizontal form-bordered" method="post" action="/update">
+            <input type="hidden" name="id" value="<%=records._id %>">
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="inputFocus">Medicine</label>
+              <div class="col-md-6">
+                <input type="text" class="form-control" id="inputFocus" value="<%= records.medicine %>" name="medicine" required >
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="inputFocus">Seller Name</label>
+              <div class="col-md-6">
+                <input type="text" class="form-control" id="inputFocus" value="<%= records.sellername %>" name="sellername" required >
+              </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="inputFocus">Batch Number</label>
+                <div class="col-md-6">
+                  <input type="text" class="form-control" id="inputFocus" value="<%= records.batchnumber%>" name="batchnumber" required >
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="inputFocus">Expiry Month</label>
+                <div class="col-md-6">
+                  
+                  <select class="form-control" name="expirymonth" id="inputFocus" >
+                    <option name="Jan" <% if(records.expirymonth == "Jan"){ %> selected<% } %>>Jan</option>
+                    <option name="Feb"<% if(records.expirymonth=="Feb"){ %> selected<% } %>>Feb</option>
+                    <option name="Mar" <% if(records.expirymonth=="Mar"){ %> selected<% } %>>Mar</option>
+                    <option name="Apr" <% if(records.expirymonth=="Apr"){ %> selected<% } %>>Apr</option>
+                    <option name="May" <% if(records.expirymonth=="May"){ %> selected<% } %>>May</option>
+                    <option name="Jun" <% if(records.expirymonth=="Jun"){ %> selected<% } %>>Jun</option>
+                    <option name="July"<% if(records.expirymonth=="July"){%> selected<% } %>>July</option>
+                    <option name="Aug" <% if(records.expirymonth=="Aug"){ %> selected<% } %>>Aug</option>
+                    <option name="Sep" <% if(records.expirymonth=="Sep"){ %> selected<% } %>>Sep</option>
+                    <option name="Oct" <% if(records.expirymonth=="Oct"){ %> selected<% } %>>Oct</option>
+                    <option name="Nov" <% if(records.expirymonth=="Nov"){ %> selected<% } %>>Nov</option>
+                    <option name="Dec" <% if(records.expirymonth=="Dec"){ %> selected<% } %>>Dec</option>
+              
+                  </select>
+                 
+                </div>
+                
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="inputFocus">Expiry year</label>
+                <div class="col-md-6">
+                  <input type="text" class="form-control"  value="<%= records.expiryyear%>"id="inputFocus" name="expiryyear" required >
+                </div>
+              </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="inputFocus">Submit</label>
+              
+              <div class="col-md-4">
+                <input type="submit" id="inputFocus" class="btn btn-primary form-control" value="Update">
+              </div>
+              <div class="col-md-4"></div>
+            </div>
+        
+          </form>
+        </div>
+        </div>
+     </section>
+          
+   
+    </div>
+         
+          
+         
+            
+   </section>
+      
+  <!-- footer -->
+          <%- include('footer.ejs') -%>
+    </body>
+  </html>
+
+
+  

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('header.ejs') -%>
+  </head>
+  <body>
+    
+    
+      <section class="body">
+
+        <!-- start: header -->
+        
+        <!-- end: header -->
+  
+        <div class="inner-wrapper">
+          <!-- start: sidebar -->>
+          <aside id="sidebar-left" class="sidebar-left">
+          
+            <div class="sidebar-header">
+             
+              <div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
+                <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+              </div>
+            </div>
+          
+            <div class="nano">
+              <div class="nano-content">
+              <!--  navbar-->
+               <%- include('navbar.ejs')-%>
+               
+                <hr class="separator" />
+          
+               
+          
+                <hr class="separator" />
+          
+              </div>
+          
+            </div>
+          
+          </aside>
+          
+          <!-- table -->
+  
+          <section role="main" class="content-body">
+            <header class="page-header">
+              <h2>Dashboard</h2>
+            </header>
+            
+  
+              <div class="container">
+                <% if(success!=''){%>
+                  <div class="alert alert-info">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <strong ><%= success %></strong>
+                  </div>
+                  <%}%>
+              
+              
+                <div class="row">
+                  <div class="col-lg-10">
+                    <section class="panel">
+                      <header class="panel-heading">
+                        <div class="panel-actions">
+                          <a href="#" class="fa fa-caret-down"></a>
+                         
+                        </div>
+      
+                        <h2 class="panel-title">Save medicine</h2>
+                       
+                      </header>
+                      <div class="panel-body">
+                        <form class="form-inline" action="/addmed" method="POST">
+                          <div class="form-group">
+                            
+                            
+                            <input type="text" class="form-control" id="medicine" name="medicine" placeholder="Enter medicine">
+                          
+                          </div>
+                          <div class="form-group">
+                            
+                          
+                            <input type="text" class="form-control" id="sellername" name="sellername" placeholder="Enter sellername">
+                            
+                          </div>
+                          <div class="form-group">
+                          
+                           
+                            <input type="text" class="form-control" id="batchnumber" name="batchnumber" placeholder="Enter Batchnumber">
+                          
+                          </div>
+                          <div class="form-group">
+                            
+                           
+          
+                              <select class="form-control" name="expirymonth" id="inputFocus" >
+                              <option name="jan">Jan</option>
+                              <option name="feb">Feb</option>
+                              <option name="mar">Mar</option>
+                              <option name="apr">Apr</option>
+                              <option name="may">May</option>
+                              <option name="jun">Jun</option>
+                              <option name="july">July</option>
+                              <option name="aug">Aug</option>
+                              <option name="sep">Sep</option>
+                              <option name="oct">Oct</option>
+                              <option name="nov">Nov</option>
+                              <option name="dec">Dec</option>
+                              </select>
+                          
+                          </div>
+                          <div class="form-group">
+                      
+                         
+                            <input type="text" class="form-control" id="expiryyear" name="expiryyear" placeholder="year">
+                          
+                          </div>
+
+      
+      
+                         
+                          <div class="form-group">
+                            
+                            
+                           
+                              <input type="submit" id="inputFocus" class="btn btn-primary form-control" value="Save">
+                         
+                            
+                          </div>
+                        </form>
+                      </div>
+                    </section>
+                  </div>
+                </div>
+              
+                <hr>
+                <hr>
+              
+            
+               
+                  
+             <div class="row">
+                <div class="col-md-8">
+                    <section class="panel">
+                      <header class="panel-heading">
+                        <div class="panel-actions">
+                          <a href="#" class="fa fa-caret-down"></a>
+                          
+                        </div>
+                
+                        <h1 class="panel-title">Medicines</h1>
+                      </header>
+                      <div class="panel-body">
+                        <div class="table-responsive">
+                          <table class="table table-hover mb-none"  id="tid">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>Medicine</th>
+                                <th>Seller name</th>
+                                <th>Batch number</th>
+                                <th>Expiry month</th>
+                                <th>Expiry year</th>
+                                <th>Action</th>
+                                
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <% if (records.length >0 ){ %>
+                                <% records.forEach(function(row) { %>
+                              
+                                <tr>
+                                  <th>#</th>
+                                  <td><%= row.medicine %></td>
+                                  <td><%= row.sellername %></td>
+                                  <td><%= row.batchnumber %></td>
+                                  <td><%= row.expirymonth %></td> 
+                                  <td><%= row.expiryyear %></td>
+                            
+                                <td >
+                                  
+                                  <a href="/edit/<%= row._id%>"> <button  class="btn btn-info">Edit</button></a>
+                                  
+                               
+                                  <a href="/search-delete/<%= row._id%>" ><button class="btn btn-danger">Delete</button></a>
+                                  </td>
+
+                              </tr>
+                              <%})}else { %>
+                                <th scope="colspan=5">NO data found</th>
+                              <%}%> 
+                              
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+            </div>
+            </div>
+            
+            <!-- start: page -->
+  
+  
+            
+  
+            <!-- end: page -->
+             </section>
+    </div>
+  
+      </section>
+  <!--  footer -->
+  <%- include('footer.ejs') -%>
+  <script>
+    $(document).ready(function(){
+      $('#medicine').keyup(function(){
+        search_table($(this).val());
+      });
+      function search_table(value){
+        $('#tid tr').each(function(){
+          var found='false';
+          $(this).each(function(){
+            if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)
+            {
+              found='true';
+            }
+          });
+          if(found == 'true')
+          {
+           $(this).show(); 
+          }
+          else
+          {
+            $(this).hide();
+          }
+        });
+      }
+    });
+   </script>
+    <script>
+      $(document).ready(function() {
+        $('#tid').DataTable();
+      } );
+      </script>
+    </body>
+  </html>
+
+
+  
